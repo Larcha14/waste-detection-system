@@ -1,24 +1,50 @@
 # Secrets
 .env
+.env.*
 
-# C++ build
+# Keep examples
+!.env.example
+
+# CMake / builds
 build/
 cmake-build-*/
 CMakeFiles/
 CMakeCache.txt
+cmake_install.cmake
 compile_commands.json
 Makefile
+.ninja_deps
+.ninja_log
 
-# Binaries
+# Binaries / objects
 *.o
+*.obj
 *.a
+*.lib
 *.so
+*.dll
+*.dylib
 *.exe
 *.out
 
+# Test / coverage
+Testing/
+CTestTestfile.cmake
+*.gcda
+*.gcno
+*.gcov
+coverage/
+
+# vcpkg local files
+vcpkg_installed/
+.vcpkg/
+
 # IDE
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 .idea/
 
 # OS
 .DS_Store
+Thumbs.db
