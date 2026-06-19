@@ -1,0 +1,92 @@
+#Version 0.1
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: detection_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_HOST_PORT}:5432" #"HOST_PORT:CONTAINER_PORT"
+    volumes:
+      - detection_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: detection_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: ${MESSAGE_BROKER_USER}
+      RABBITMQ_DEFAULT_PASS: ${MESSAGE_BROKER_PASSWORD}
+    ports:
+      - "${RABBITMQ_HOST_PORT}:5672"
+      - "${RABBITMQ_UI_HOST_PORT}:15672"
+    volumes:
+      - detection_rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+
+  api-service:
+    build:
+      context: . # какая папка будет видна Dokerfile для сборки 
+      dockerfile: services/api-service/Dockerfile # путь к dokerfile относительно context
+    container_name: detection_api
+    environment:
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+      RABBITMQ_USER: ${MESSAGE_BROKER_USER}
+      RABBITMQ_PASSWORD: ${MESSAGE_BROKER_PASSWORD}
+      
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "${API_HOST_PORT}:8080"
+
+  detection-worker:
+    build:
+      context: .
+      dockerfile: services/detection-worker/Dockerfile
+    container_name: detection_worker
+    environment:
+      RABBITMQ_HOST: ${RABBITMQ_HOST}
+      RABBITMQ_PORT: ${RABBITMQ_PORT}
+      RABBITMQ_USER: ${MESSAGE_BROKER_USER}
+      RABBITMQ_PASSWORD: ${MESSAGE_BROKER_PASSWORD}
+
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    ports:
+      - "${DETECTION_WORKER_PORT}:8081"
+
+
+volumes:
+  detection_postgres_data:
+  detection_rabbitmq_data:
