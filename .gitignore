@@ -48,3 +48,5 @@ vcpkg_installed/
 # OS
 .DS_Store
 Thumbs.db
+
+services/detection-job-service/models/model.json

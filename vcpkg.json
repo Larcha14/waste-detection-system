@@ -1,0 +1,13 @@
+{
+  "name": "waste-detection-system",
+  "version": "0.1.0",
+  "dependencies": [
+    "drogon",
+    "libpqxx",
+    "librabbitmq",
+    "nlohmann-json",
+    "spdlog",
+    "yaml-cpp",
+    "gtest"
+  ]
+}

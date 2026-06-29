@@ -1,0 +1,29 @@
+{
+  "name": "waste-detection-dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "source=waste-vcpkg-cache,target=/opt/vcpkg/installed,type=volume"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "cmake.configurePreset": "dev",
+        "C_Cpp.intelliSenseEngine": "disabled",
+        "clangd.arguments": [
+          "--compile-commands-dir=/workspace/build/dev"
+        ]
+      }
+    }
+  }
+}
