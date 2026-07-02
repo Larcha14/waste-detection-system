@@ -4,18 +4,28 @@ find_package(nlohmann_json CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(yaml-cpp CONFIG REQUIRED)
 
-add_executable(detection-job-service
+file(GLOB ORM_MODEL_SOURCES CONFIGURE_DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/models/*.cc
+)
+
+
+
+add_executable(flight-service
     src/main.cpp
     src/HealthRoutes.cpp
-    src/JobRoutes.cpp
+    src/FlightRoutes.cpp
     src/Config.cpp
+    ${ORM_MODEL_SOURCES}
 )
 
-target_include_directories(detection-job-service PRIVATE
-    include
+
+target_include_directories(flight-service
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(detection-job-service 
+target_link_libraries(flight-service 
     PRIVATE
         shared
         Drogon::Drogon

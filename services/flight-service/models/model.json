@@ -1,0 +1,16 @@
+{
+  "rdbms": "postgresql",
+  "host": "flights_postgres",
+  "port": 5432,
+  "dbname": "flights_db",
+  "user": "service",
+  "passwd": "password",
+  "is_fast": false,
+  "connection_number": 1,
+  "auto_batch": false,
+  "tables": ["flights", "flight_images"],
+  "relationships": {
+    "enabled": false,
+    "items": []
+  }
+}

@@ -22,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     flex \
     python3 \
     linux-libc-dev \
+    gettext-base \
     && rm -rf /var/lib/apt/lists/*
 
 ENV VCPKG_ROOT=/opt/vcpkg

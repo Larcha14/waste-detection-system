@@ -3,7 +3,7 @@
 #include <drogon/drogon.h>
 #include <json/json.h>
 
-namespace waste_detection::job_service::routes {
+namespace waste_detection::flight_service::routes {
     void registerHealthRoutes() {
         drogon::app().registerHandler(
             "/health",

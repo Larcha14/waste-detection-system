@@ -3,9 +3,9 @@
 
 #include "Config.hpp"
 #include "HealthRoutes.hpp"
-#include "JobRoutes.hpp"
+#include "FlightRoutes.hpp"
 
-using namespace waste_detection::job_service;
+using namespace waste_detection::flight_service;
 
 
 int main() {

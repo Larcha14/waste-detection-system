@@ -3,15 +3,15 @@
 services:
   jobs-postgres:
     image: postgres:16
-    container_name: jobs_postgres
+    container_name: flights_postgres
     environment:
-      POSTGRES_USER: ${JOBS_DB_USER}
-      POSTGRES_PASSWORD: ${JOBS_DB_PASSWORD}
-      POSTGRES_DB: ${JOBS_DB_NAME}
+      POSTGRES_USER: ${FLIGHTS_DB_USER}
+      POSTGRES_PASSWORD: ${FLIGHTS_DB_PASSWORD}
+      POSTGRES_DB: ${FLIGHTS_DB_NAME}
     ports:
-      - "${JOBS_DB_HOST_PORT}:5432" #"HOST_PORT:CONTAINER_PORT"
+      - "${FLIGHTS_DB_HOST_PORT}:5432" #"HOST_PORT:CONTAINER_PORT"
     volumes:
-      - jobs_postgres_data:/var/lib/postgresql/data
+      - flights_postgres_data:/var/lib/postgresql/data
       - ./db/jobs/init:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
@@ -66,11 +66,11 @@ services:
   #     RABBITMQ_USER: ${MESSAGE_BROKER_USER}
   #     RABBITMQ_PASSWORD: ${MESSAGE_BROKER_PASSWORD}
       
-  #     JOBS_DB_HOST: ${JOBS_DB_HOST}
-  #     JOBS_DB_PORT: ${JOBS_DB_PORT}
-  #     JOBS_DB_USER: ${JOBS_DB_USER}
-  #     JOBS_DB_PASSWORD: ${JOBS_DB_PASSWORD}
-  #     JOBS_DB_NAME: ${JOBS_DB_NAME}
+  #     FLIGHTS_DB_HOST: ${FLIGHTS_DB_HOST}
+  #     FLIGHTS_DB_PORT: ${FLIGHTS_DB_PORT}
+  #     FLIGHTS_DB_USER: ${FLIGHTS_DB_USER}
+  #     FLIGHTS_DB_PASSWORD: ${FLIGHTS_DB_PASSWORD}
+  #     FLIGHTS_DB_NAME: ${FLIGHTS_DB_NAME}
 
   #   depends_on:
   #     postgres:
@@ -91,11 +91,11 @@ services:
   #     RABBITMQ_USER: ${MESSAGE_BROKER_USER}
   #     RABBITMQ_PASSWORD: ${MESSAGE_BROKER_PASSWORD}
 
-  #     JOBS_DB_HOST: ${JOBS_DB_HOST}
-  #     JOBS_DB_PORT: ${JOBS_DB_PORT}
-  #     JOBS_DB_USER: ${JOBS_DB_USER}
-  #     JOBS_DB_PASSWORD: ${JOBS_DB_PASSWORD}
-  #     JOBS_DB_NAME: ${JOBS_DB_NAME}
+  #     FLIGHTS_DB_HOST: ${FLIGHTS_DB_HOST}
+  #     FLIGHTS_DB_PORT: ${FLIGHTS_DB_PORT}
+  #     FLIGHTS_DB_USER: ${FLIGHTS_DB_USER}
+  #     FLIGHTS_DB_PASSWORD: ${FLIGHTS_DB_PASSWORD}
+  #     FLIGHTS_DB_NAME: ${FLIGHTS_DB_NAME}
 
   #   depends_on:
   #     postgres:
@@ -107,6 +107,6 @@ services:
 
 
 volumes:
-  jobs_postgres_data:
+  flights_postgres_data:
   # detections_postgres_data:
   # detection_rabbitmq_data:

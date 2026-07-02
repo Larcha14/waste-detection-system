@@ -2,7 +2,10 @@
   "name": "waste-detection-system",
   "version": "0.1.0",
   "dependencies": [
-    "drogon",
+        {
+      "name": "drogon",
+      "features": ["ctl", "postgres"]
+    },
     "libpqxx",
     "librabbitmq",
     "nlohmann-json",

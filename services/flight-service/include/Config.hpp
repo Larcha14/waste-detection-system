@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace waste_detection::job_service::db_config {
+namespace waste_detection::flight_service::db_config {
 
 struct Config {
     std::string host;
